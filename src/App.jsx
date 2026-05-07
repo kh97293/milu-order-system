@@ -374,7 +374,7 @@ export default function App() {
                 )}
 
                 <div style={styles.detailBox}>
-                  <h3 style={styles.sectionTitle}>🛍️購買商品明細</h3>
+                  <h3 style={styles.sectionTitle}>📃📜購買商品明細</h3>
                   {selectedOrder.items.map((item, index) => (
                     <div key={index} style={styles.itemRow}>
                       <span>
