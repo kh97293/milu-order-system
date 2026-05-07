@@ -193,7 +193,7 @@ export default function App() {
                       ? "📂 全部"
                       : filter === "已登記"
                       ? "📑已登記"
-                      : "📥 已購入"}
+                      : "🛍️ 已購入"}
                   </button>
                 ))}
               </div>
@@ -243,7 +243,7 @@ export default function App() {
                 >
                   <div style={styles.tags}>
                     <span style={styles.tagBlue}>
-                      {order.phase === "已登記" ? "📑 已登記" : "🛒 已購入"}
+                      {order.phase === "已登記" ? "📑 已登記" : "🛍️ 已購入"}
                     </span>
                     {order.paymentStatus && (
                       <span style={styles.tagCream}>
@@ -297,7 +297,7 @@ export default function App() {
                 </div>
 
                 <div style={styles.detailBox}>
-                  <h3 style={styles.sectionTitle}>🛍️購買商品明細</h3>
+                  <h3 style={styles.sectionTitle}>📃📜購買商品明細</h3>
                   {selectedOrder.items.map((item, index) => (
                     <div key={index} style={styles.itemRow}>
                       <span>
@@ -323,7 +323,7 @@ export default function App() {
                   <span style={styles.tagBlue}>
                     {selectedOrder.phase === "已登記"
                       ? "📑 已登記"
-                      : "🛒 已購入"}
+                      : "🛍️ 已購入"}
                   </span>
                   <span style={styles.tagCream}>
                     💳 {selectedOrder.paymentStatus}
