@@ -144,8 +144,8 @@ export default function App() {
             <div style={styles.heroImage}></div>
 
             <section style={styles.homeFormCard}>
-              <h2 style={styles.title}> 查詢訂單</h2>
-              <p style={styles.helperText}>輸入社群暱稱，查詢您的訂單進度 ☁️</p>
+              <h2 style={styles.title}> 訂單查詢系統</h2>
+              <p style={styles.helperText}>輸入社群暱稱，查詢您的訂單進度☁️</p>
 
               <input
                 style={styles.input}
@@ -223,7 +223,11 @@ export default function App() {
 
             {filteredOrders.length === 0 ? (
               <section style={styles.emptyCard}>
-                <div style={styles.emptyIcon}>☁️</div>
+                <img
+  src="/deer-head.png"
+  alt="咪路麋鹿"
+  style={styles.emptyDeerImage}
+/>
                 <h3>沒有相關訂單</h3>
                 <p>可以換個篩選條件看看唷☁️</p>
               </section>
@@ -416,7 +420,10 @@ export default function App() {
               style={styles.finalDeerImage}
             />
             <h2 style={styles.title}>完成回報</h2>
-            <p style={styles.finalText}>感謝您的訂購與信任！期待商品到來 ☁️</p>
+            <p style={styles.finalText}>
+  感謝您的訂購與信任！！<br />
+  期待商品到來 ☁️
+</p>
           </section>
         )}
       </main>
@@ -538,7 +545,7 @@ function Modal({ children }) {
 
 const styles = {
   page: {
-    minHeight: "100dvh",
+    minHeight: "auto",
     background: "#dce9f7",
     padding: 12,
     fontFamily:
@@ -1045,8 +1052,15 @@ const styles = {
   },
   finalText: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 800,
-    lineHeight: 1.7,
+    lineHeight: 1.8,
+  },
+  emptyDeerImage: {
+    width: 72,
+    height: 72,
+    objectFit: "contain",
+    display: "block",
+    margin: "0 auto 12px",
   },
 };
