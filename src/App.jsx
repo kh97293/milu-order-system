@@ -193,7 +193,7 @@ export default function App() {
                       ? "📂 全部"
                       : filter === "已登記"
                       ? "📑已登記"
-                      : "🛒 已購入"}
+                      : "📥 已購入"}
                   </button>
                 ))}
               </div>
