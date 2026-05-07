@@ -9,12 +9,11 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 import React, { useMemo, useState } from "react";
-
+import "./App.css";
 const paymentFilters = ["全部", "待匯定", "等待款項確認中", "未付款", "已付款"];
 
 const CUSTOMER_SERVICE_LINK = "https://lin.ee/NQwZi4A";
 
-// 這裡換成你的 Apps Script Web App 網址，結尾要是 /exec
 const PAYMENT_REPORT_WEBAPP_URL =
   "https://script.google.com/macros/s/AKfycbycG2dD6dKiPIkgG5ecUZGVZB3hPdBYFw55RYGiPNSVoi9bLf5zWajj97MfDo9SRFcAZw/exec";
 
@@ -280,7 +279,6 @@ export default function App() {
                 <div style={styles.detailHeader}>
                   <div style={styles.titleRow}>
                     <h2 style={styles.orderTitle}>{selectedOrder.groupName}</h2>
-
                     <div style={styles.noticeBox}>⏳ 等待通知匯款中</div>
                   </div>
 
@@ -435,23 +433,20 @@ export default function App() {
         <Modal>
           <h2 style={styles.modalTitle}>匯款資訊</h2>
           <div style={styles.paymentInfo}>
-            <p>轉帳請備注社群暱稱💌</p>
-            <p>例如：麋鹿/咖醬的狗</p>
-            <br />
-            <p>🦌可轉帳 / 無卡帳號 ⭣</p>
-            <p>台新（812）28881013405739</p>
-            <p>中信（822）193540210513</p>
-            <p>國泰（013）699508481385</p>
+            <p style={styles.paymentLine}>轉帳請備注社群暱稱💌</p>
+            <p style={styles.paymentLine}>例如：麋鹿 / 咖醬的狗</p>
 
-            <p>🐶鏈鋸人快閃 / 韓國連線專用帳號 ⭣</p>
-            <p>台新（812）28881011587005</p>
-            <p>聯邦（803）888504565944</p>
+            <p style={styles.paymentGroup}>🦌 可轉帳 / 無卡帳號 ↓</p>
+            <p style={styles.paymentLine}>台新（812）28881013405739</p>
+            <p style={styles.paymentLine}>中信（822）193540210513</p>
+            <p style={styles.paymentLine}>國泰（013）699508481385</p>
 
-            <br />
+            <p style={styles.paymentGroup}>🐶 鏈鋸人快閃 / 韓國連線專用帳號 ↓</p>
+            <p style={styles.paymentLine}>台新（812）28881011587005</p>
+            <p style={styles.paymentLine}>聯邦（803）888504565944</p>
 
-            <p>
-              需付款金額：
-              <strong>NT$ {deposit.toLocaleString()}</strong>
+            <p style={styles.paymentAmount}>
+              需付款金額：<strong>NT$ {deposit.toLocaleString()}</strong>
             </p>
           </div>
 
@@ -514,8 +509,8 @@ export default function App() {
 function Info({ label, value }) {
   return (
     <div style={styles.infoBox}>
-      <span>{label}</span>
-      <strong>{value}</strong>
+      <span style={styles.infoLabel}>{label}</span>
+      <strong style={styles.infoValue}>{value}</strong>
     </div>
   );
 }
@@ -532,7 +527,7 @@ const styles = {
   page: {
     minHeight: "100vh",
     background: "#dce9f7",
-    padding: 18,
+    padding: 12,
     fontFamily:
       '"jf open 粉圓", "Zen Maru Gothic", "Klee One", "LXGW WenKai TC", "Yuanti TC", "Microsoft JhengHei", sans-serif',
     color: "#163f66",
@@ -545,29 +540,30 @@ const styles = {
     minHeight: "92vh",
     margin: "0 auto",
     background: "#fff8ea",
-    padding: 22,
-    borderLeft: "8px solid #5377bd",
-    borderRight: "8px solid #5377bd",
+    padding: 18,
+    borderLeft: "6px solid #5377bd",
+    borderRight: "6px solid #5377bd",
     boxShadow: "0 12px 32px rgba(64,100,138,.12)",
   },
   header: {
     textAlign: "center",
-    padding: "8px 0 20px",
+    padding: "6px 0 14px",
   },
   finalDeerImage: {
-    width: 120,
-    height: 120,
+    width: 110,
+    height: 110,
     objectFit: "contain",
     display: "block",
     margin: "0 auto 12px",
   },
   brand: {
-    fontSize: 28,
-    lineHeight: 1.4,
+    fontSize: 18,
+    lineHeight: 1.35,
     fontWeight: 900,
+    textAlign: "center",
     fontFamily:
       '"Arial Rounded MT Bold", "PingFang TC", "Noto Sans TC", sans-serif',
-    letterSpacing: "1px",
+    letterSpacing: "0.5px",
   },
   heroImage: {
     width: "100%",
@@ -576,69 +572,72 @@ const styles = {
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    marginBottom: -34,
+    marginBottom: -30,
   },
   homeFormCard: {
     background: "#fffdfa",
-    padding: 24,
+    padding: 20,
     border: "3px solid #163f66",
-    boxShadow: "6px 6px 0 rgba(22,63,102,.26)",
-    marginBottom: 24,
+    boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
+    marginBottom: 22,
     position: "relative",
     zIndex: 2,
   },
   card: {
     background: "#fffdfa",
-    padding: 24,
+    padding: 20,
     border: "3px solid #163f66",
-    boxShadow: "6px 6px 0 rgba(22,63,102,.26)",
-    marginBottom: 24,
+    boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
+    marginBottom: 22,
   },
   title: {
     textAlign: "center",
-    fontSize: 28,
+    fontSize: 25,
     margin: "6px 0 8px",
     fontWeight: 800,
   },
   helperText: {
     textAlign: "center",
     color: "#5b7896",
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: 700,
   },
   input: {
-    width: "78%",
+    width: "82%",
     display: "block",
-    margin: "18px auto 0",
-    padding: "13px 16px",
+    margin: "16px auto 0",
+    padding: "12px 14px",
     border: "2px solid #163f66",
     background: "#eef6ff",
+    color: "#123D73",
+    WebkitTextFillColor: "#123D73",
+    caretColor: "#123D73",
     textAlign: "center",
     fontSize: 16,
-    fontWeight: 700,
+    fontWeight: 800,
     boxSizing: "border-box",
     outline: "none",
   },
   primaryBtn: {
     width: "100%",
-    marginTop: 16,
-    padding: 15,
+    marginTop: 14,
+    padding: "13px 12px",
     border: "2px solid #163f66",
     background: "#83bde8",
     color: "#163f66",
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 800,
     cursor: "pointer",
     boxShadow: "4px 4px 0 rgba(22,63,102,.24)",
   },
   secondaryBtn: {
     width: "100%",
-    marginTop: 12,
-    padding: 15,
+    marginTop: 10,
+    padding: "13px 12px",
     border: "2px solid #163f66",
     background: "#fff8ea",
     color: "#163f66",
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 800,
     cursor: "pointer",
     boxShadow: "4px 4px 0 rgba(22,63,102,.20)",
@@ -648,17 +647,19 @@ const styles = {
     background: "#fff8ea",
     color: "#163f66",
     fontWeight: 800,
-    fontSize: 15,
-    marginBottom: 14,
-    padding: "8px 12px",
+    fontSize: 14,
+    marginBottom: 12,
+    padding: "7px 11px",
     cursor: "pointer",
+    display: "block",
+    marginRight: "auto",
   },
   filterCard: {
     background: "#fffdfa",
     border: "3px solid #163f66",
-    padding: 18,
-    boxShadow: "6px 6px 0 rgba(22,63,102,.26)",
-    marginBottom: 24,
+    padding: 14,
+    boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
+    marginBottom: 20,
   },
   summaryRow: {
     display: "flex",
@@ -666,57 +667,71 @@ const styles = {
     alignItems: "center",
     color: "#3d8fbf",
     fontWeight: 800,
-    marginBottom: 16,
+    marginBottom: 12,
+    gap: 8,
   },
   selectPill: {
     border: "2px solid #3d8fbf",
-    padding: "5px 10px",
+    padding: "4px 8px",
     background: "#eef6ff",
-    fontSize: 13,
+    fontSize: 12,
+    whiteSpace: "nowrap",
   },
-  orderCount: { fontSize: 15 },
+  orderCount: {
+    fontSize: 13,
+    whiteSpace: "nowrap",
+  },
   mainTabs: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
-    gap: 9,
+    gap: 7,
   },
   filterTab: {
     border: "2px solid #163f66",
-    padding: "11px 8px",
+    padding: "9px 5px",
     background: "#fffdfa",
     color: "#163f66",
+    fontSize: 13,
     fontWeight: 800,
     cursor: "pointer",
-    boxShadow: "3px 3px 0 rgba(22,63,102,.22)",
+    boxShadow: "3px 3px 0 rgba(22,63,102,.20)",
+    whiteSpace: "nowrap",
+    lineHeight: 1.2,
   },
   filterTabActive: {
     background: "#83bde8",
     color: "#fff",
   },
   filterGroups: {
-    marginTop: 14,
+    marginTop: 12,
     background: "#eef6ff",
     border: "2px solid #163f66",
-    padding: 12,
+    padding: 10,
   },
   filterLabel: {
     color: "#163f66",
     fontWeight: 800,
     marginBottom: 8,
+    fontSize: 13,
+    textAlign: "left",
   },
   chipWrap: {
     display: "flex",
     flexWrap: "wrap",
-    gap: 8,
-    marginBottom: 12,
+    gap: 6,
+    marginBottom: 10,
+    justifyContent: "flex-start",
   },
   chip: {
     border: "2px solid #163f66",
-    padding: "8px 12px",
+    padding: "6px 8px",
     background: "#fffdfa",
     color: "#163f66",
-    fontWeight: 700,
+    fontSize: 11,
+    fontWeight: 800,
     cursor: "pointer",
+    whiteSpace: "nowrap",
+    lineHeight: 1.2,
   },
   chipActive: {
     background: "#5f83d1",
@@ -725,51 +740,58 @@ const styles = {
   orderCard: {
     background: "#fffdfa",
     border: "3px solid #163f66",
-    padding: 24,
-    minHeight: 185,
-    boxShadow: "6px 6px 0 rgba(22,63,102,.26)",
-    marginBottom: 24,
+    padding: 20,
+    minHeight: 170,
+    boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
+    marginBottom: 22,
     cursor: "pointer",
   },
   tags: {
     display: "flex",
-    gap: 8,
+    gap: 7,
     flexWrap: "wrap",
-    marginBottom: 18,
+    marginBottom: 14,
   },
   tagBlue: {
     background: "#5f83d1",
     color: "#fff",
-    padding: "7px 12px",
-    fontSize: 14,
+    padding: "6px 10px",
+    fontSize: 12,
     fontWeight: 800,
     border: "1px solid #163f66",
+    whiteSpace: "nowrap",
+    lineHeight: 1.2,
   },
   tagCream: {
     background: "#83bde8",
     color: "#163f66",
-    padding: "7px 12px",
-    fontSize: 14,
+    padding: "6px 10px",
+    fontSize: 12,
     fontWeight: 800,
     border: "1px solid #163f66",
+    whiteSpace: "nowrap",
+    lineHeight: 1.2,
   },
   tagCloud: {
     background: "#fff8ea",
     color: "#163f66",
     border: "1px solid #163f66",
-    padding: "7px 12px",
-    fontSize: 14,
+    padding: "6px 10px",
+    fontSize: 12,
     fontWeight: 800,
+    whiteSpace: "nowrap",
+    lineHeight: 1.2,
   },
   orderTitle: {
-    fontSize: 26,
-    lineHeight: 1.35,
+    fontSize: 18,
+    lineHeight: 1.3,
     fontWeight: 800,
-    margin: "12px 0 22px",
+    margin: "10px 0 14px",
+    textAlign: "left",
   },
   smallNotice: {
-    marginTop: -12,
-    marginBottom: 16,
+    marginTop: -8,
+    marginBottom: 14,
     fontSize: 13,
     color: "#5b7896",
     fontWeight: 700,
@@ -779,102 +801,125 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
-    gap: 16,
+    gap: 12,
   },
   qty: {
     border: "2px solid #163f66",
-    padding: "8px 16px",
+    padding: "7px 12px",
+    fontSize: 14,
     fontWeight: 800,
     background: "#fffdfa",
+    whiteSpace: "nowrap",
   },
   totalBox: { textAlign: "right" },
   totalLabel: {
     display: "block",
     fontWeight: 800,
     color: "#5b7896",
-    fontSize: 14,
+    fontSize: 12,
   },
   total: {
     color: "#8fb9ef",
-    fontSize: 32,
+    fontSize: 25,
     fontWeight: 800,
+    whiteSpace: "nowrap",
   },
   detailHeader: {
     borderBottom: "2px dashed #163f66",
-    paddingBottom: 16,
-    marginBottom: 16,
+    paddingBottom: 14,
+    marginBottom: 14,
   },
   infoOne: {
     background: "#eef6ff",
     borderLeft: "5px solid #83bde8",
-    padding: 16,
+    padding: 13,
     display: "flex",
     justifyContent: "space-between",
     fontWeight: 800,
-    marginBottom: 14,
+    marginBottom: 12,
+    fontSize: 14,
+    gap: 10,
   },
   noticeBox: {
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 6,
     background: "#fff1c9",
     color: "#9b6b00",
-    padding: "10px 16px",
+    padding: "8px 12px",
     fontWeight: 800,
-    fontSize: 15,
+    fontSize: 13,
     borderRadius: 999,
     border: "2px dashed #f2b94b",
     boxShadow: "0 4px 10px rgba(242,185,75,.18)",
     marginTop: 0,
     marginBottom: 0,
+    whiteSpace: "nowrap",
   },
   titleRow: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 10,
+    gap: 8,
     flexWrap: "wrap",
   },
   infoGrid: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
-    gap: 10,
+    gap: 9,
   },
   infoBox: {
     background: "#eef6ff",
     border: "2px solid #163f66",
-    padding: 13,
+    padding: "11px 10px",
     display: "flex",
     flexDirection: "column",
     gap: 5,
     fontWeight: 800,
+    minHeight: 72,
+    boxSizing: "border-box",
+  },
+  infoLabel: {
+    fontSize: 12,
+    lineHeight: 1.2,
+    whiteSpace: "nowrap",
+  },
+  infoValue: {
+    fontSize: 13,
+    lineHeight: 1.2,
+    whiteSpace: "nowrap",
   },
   detailBox: {
-    marginTop: 16,
+    marginTop: 14,
     background: "#fffdfa",
     borderTop: "2px dashed #163f66",
-    padding: "16px 0 0",
+    padding: "14px 0 0",
   },
   sectionTitle: {
     margin: "0 0 12px",
+    fontSize: 19,
+    whiteSpace: "nowrap",
   },
   itemRow: {
     display: "flex",
     justifyContent: "space-between",
-    padding: "10px 0",
+    gap: 10,
+    padding: "9px 0",
     borderBottom: "2px dashed #b8cee5",
     fontWeight: 700,
+    fontSize: 14,
+    lineHeight: 1.35,
   },
   emptyCard: {
     background: "#fffdfa",
     border: "2px dashed #b8cee5",
-    padding: 34,
+    padding: 28,
     textAlign: "center",
     color: "#5b7896",
     fontWeight: 800,
   },
-  emptyIcon: { fontSize: 40 },
+  emptyIcon: { fontSize: 36 },
   modalOverlay: {
     position: "fixed",
     inset: 0,
@@ -882,44 +927,65 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
+    padding: 16,
     zIndex: 99,
   },
   modalBox: {
     width: 310,
+    maxWidth: "calc(100vw - 32px)",
+    maxHeight: "86vh",
+    overflowY: "auto",
     background: "#fffdfa",
     border: "3px solid #163f66",
-    padding: 24,
-    boxShadow: "6px 6px 0 rgba(22,63,102,.26)",
+    padding: 18,
+    boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
     color: "#163f66",
     fontWeight: 700,
+    boxSizing: "border-box",
   },
   modalTitle: {
     textAlign: "center",
-    fontSize: 26,
+    fontSize: 23,
     fontWeight: 800,
+    margin: "4px 0 12px",
   },
   modalText: {
     textAlign: "center",
-    lineHeight: 1.7,
+    lineHeight: 1.6,
     color: "#5b7896",
   },
   paymentInfo: {
     background: "#eef6ff",
     border: "2px solid #163f66",
-    padding: 14,
-    lineHeight: 1.8,
+    padding: "10px 11px",
+    lineHeight: 1.35,
+    fontSize: 13,
+  },
+  paymentLine: {
+    margin: "4px 0",
+    lineHeight: 1.35,
+  },
+  paymentGroup: {
+    margin: "10px 0 4px",
+    lineHeight: 1.35,
+    fontWeight: 900,
+  },
+  paymentAmount: {
+    margin: "10px 0 2px",
+    lineHeight: 1.35,
+    fontWeight: 900,
   },
   confirmBox: {
     background: "#eef6ff",
     border: "2px solid #163f66",
-    padding: 14,
+    padding: 13,
     marginTop: 14,
+    fontSize: 14,
   },
   finalText: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 800,
-    lineHeight: 1.8,
+    lineHeight: 1.7,
   },
 };
