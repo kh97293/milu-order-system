@@ -40,3 +40,31 @@
 .read-the-docs {
   color: #888;
 }
+input::placeholder {
+  color: #9aa8b8 !important;
+  -webkit-text-fill-color: #9aa8b8 !important;
+  opacity: 1 !important;
+}
+.payment-status-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.statusBtn {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 2px solid #163f66;
+  background: white;
+  color: #163f66;
+  font-weight: 700;
+  white-space: nowrap;
+}
