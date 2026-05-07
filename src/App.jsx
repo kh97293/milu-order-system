@@ -210,9 +210,7 @@ export default function App() {
                           ...(filter === "等待款項確認中"
                             ? styles.longChip
                             : {}),
-                          ...(paymentFilter === filter
-                            ? styles.chipActive
-                            : {}),
+                          ...(paymentFilter === filter ? styles.chipActive : {}),
                         }}
                         onClick={() => setPaymentFilter(filter)}
                       >
@@ -424,11 +422,16 @@ export default function App() {
             />
             <h2 style={styles.title}>完成回報</h2>
             <p style={styles.finalText}>
-              感謝您的訂購與信任！！<br />
+              感謝您的訂購與信任！！
+              <br />
               期待商品到來 ☁️
             </p>
           </section>
         )}
+
+        <footer style={styles.footer}>
+          © 咪路麋鹿動漫代購｜訂單查詢系統
+        </footer>
       </main>
 
       {showError && (
@@ -453,7 +456,9 @@ export default function App() {
             <p style={styles.paymentLine}>中信（822）193540210513</p>
             <p style={styles.paymentLine}>國泰（013）699508481385</p>
 
-            <p style={styles.paymentGroup}>🐶 鏈鋸人快閃 / 韓國連線專用帳號 ↓</p>
+            <p style={styles.paymentGroup}>
+              🐶 鏈鋸人快閃 / 韓國連線專用帳號 ↓
+            </p>
             <p style={styles.paymentLine}>台新（812）28881011587005</p>
             <p style={styles.paymentLine}>聯邦（803）888504565944</p>
 
@@ -548,9 +553,9 @@ function Modal({ children }) {
 
 const styles = {
   page: {
-    minHeight: "auto",
+    minHeight: "100dvh",
     background: "#dce9f7",
-    padding: 12,
+    padding: "24px 12px",
     fontFamily:
       '"jf open 粉圓", "Zen Maru Gothic", "Klee One", "LXGW WenKai TC", "Yuanti TC", "Microsoft JhengHei", sans-serif',
     color: "#163f66",
@@ -558,16 +563,18 @@ const styles = {
       "radial-gradient(rgba(83,119,189,.16) 1px, transparent 1px)",
     backgroundSize: "22px 22px",
   },
-    panel: {
-      maxWidth: 390,
-      minHeight: "auto",
-      margin: "0 auto",
-      background: "#fff8ea",
-      padding: "16px 16px 22px",
-      borderLeft: "6px solid #5377bd",
-      borderRight: "6px solid #5377bd",
-      boxShadow: "0 10px 24px rgba(64,100,138,.10)",
-    },
+  panel: {
+    width: "100%",
+    maxWidth: 1080,
+    minHeight: "auto",
+    margin: "0 auto",
+    background: "#fff8ea",
+    padding: "24px 28px 28px",
+    borderLeft: "6px solid #5377bd",
+    borderRight: "6px solid #5377bd",
+    boxShadow: "0 12px 32px rgba(64,100,138,.12)",
+    boxSizing: "border-box",
+  },
   header: {
     textAlign: "center",
     padding: "6px 0 12px",
@@ -878,6 +885,12 @@ const styles = {
     textAlign: "right",
     flex: 1,
   },
+  totalLabel: {
+    display: "block",
+    fontWeight: 800,
+    color: "#5b7896",
+    fontSize: 12,
+  },
   total: {
     color: "#8fb9ef",
     fontSize: 24,
@@ -1072,5 +1085,12 @@ const styles = {
     objectFit: "contain",
     display: "block",
     margin: "0 auto 12px",
+  },
+  footer: {
+    textAlign: "center",
+    marginTop: 22,
+    fontSize: 12,
+    fontWeight: 800,
+    color: "#8c9fb8",
   },
 };
