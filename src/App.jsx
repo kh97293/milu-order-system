@@ -144,7 +144,7 @@ export default function App() {
             <div style={styles.heroImage}></div>
 
             <section style={styles.homeFormCard}>
-              <h2 style={styles.title}> 訂單查詢系統</h2>
+              <h2 style={styles.title}>訂單查詢系統</h2>
               <p style={styles.helperText}>輸入社群暱稱，查詢您的訂單進度☁️</p>
 
               <input
@@ -155,7 +155,7 @@ export default function App() {
               />
 
               <button style={styles.primaryBtn} onClick={checkNickname}>
-              🔎查詢我的訂單
+                🔎查詢我的訂單
               </button>
             </section>
           </>
@@ -207,6 +207,9 @@ export default function App() {
                         key={filter}
                         style={{
                           ...styles.chip,
+                          ...(filter === "等待款項確認中"
+                            ? styles.longChip
+                            : {}),
                           ...(paymentFilter === filter
                             ? styles.chipActive
                             : {}),
@@ -224,10 +227,10 @@ export default function App() {
             {filteredOrders.length === 0 ? (
               <section style={styles.emptyCard}>
                 <img
-  src="/deer-head.png"
-  alt="咪路麋鹿"
-  style={styles.emptyDeerImage}
-/>
+                  src="/deer-head.png"
+                  alt="咪路麋鹿"
+                  style={styles.emptyDeerImage}
+                />
                 <h3>沒有相關訂單</h3>
                 <p>可以換個篩選條件看看唷☁️</p>
               </section>
@@ -297,7 +300,7 @@ export default function App() {
                 </div>
 
                 <div style={styles.detailBox}>
-                  <h3 style={styles.sectionTitle}>📃📜購買商品明細</h3>
+                  <h3 style={styles.sectionTitle}>購買商品明細🧾</h3>
                   {selectedOrder.items.map((item, index) => (
                     <div key={index} style={styles.itemRow}>
                       <span>
@@ -374,7 +377,7 @@ export default function App() {
                 )}
 
                 <div style={styles.detailBox}>
-                  <h3 style={styles.sectionTitle}>📃📜購買商品明細</h3>
+                  <h3 style={styles.sectionTitle}>購買商品明細🧾</h3>
                   {selectedOrder.items.map((item, index) => (
                     <div key={index} style={styles.itemRow}>
                       <span>
@@ -421,9 +424,9 @@ export default function App() {
             />
             <h2 style={styles.title}>完成回報</h2>
             <p style={styles.finalText}>
-  感謝您的訂購與信任！！<br />
-  期待商品到來 ☁️
-</p>
+              感謝您的訂購與信任！！<br />
+              期待商品到來 ☁️
+            </p>
           </section>
         )}
       </main>
@@ -768,21 +771,31 @@ const styles = {
   chipWrap: {
     display: "flex",
     flexWrap: "wrap",
-    gap: 10,
+    gap: 7,
     marginBottom: 10,
+    alignItems: "flex-start",
   },
   chip: {
-    border: "2px solid #163f66",
-    padding: "9px 14px",
     background: "#fffdfa",
+    border: "2px solid #163f66",
     color: "#163f66",
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: 800,
     cursor: "pointer",
     whiteSpace: "nowrap",
-    lineHeight: 1.2,
-    borderRadius: 14,
-    minWidth: "92px",
+    lineHeight: 1.1,
+    borderRadius: 10,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "7px 11px",
+    minWidth: 72,
+    boxShadow: "2px 2px 0 rgba(22,63,102,.16)",
+  },
+  longChip: {
+    fontSize: 11,
+    padding: "7px 10px",
+    minWidth: 118,
   },
   chipActive: {
     background: "#2f86d4",
