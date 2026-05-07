@@ -555,7 +555,7 @@ const styles = {
   page: {
     minHeight: "100dvh",
     background: "#dce9f7",
-    padding: "24px 12px",
+    padding: 0,
     fontFamily:
       '"jf open 粉圓", "Zen Maru Gothic", "Klee One", "LXGW WenKai TC", "Yuanti TC", "Microsoft JhengHei", sans-serif',
     color: "#163f66",
@@ -565,11 +565,11 @@ const styles = {
   },
   panel: {
     width: "100%",
-    maxWidth: 1080,
-    minHeight: "auto",
+    maxWidth: 1180,
+    minHeight: "100dvh",
     margin: "0 auto",
     background: "#fff8ea",
-    padding: "24px 28px 28px",
+    padding: "28px 36px 32px",
     borderLeft: "6px solid #5377bd",
     borderRight: "6px solid #5377bd",
     boxShadow: "0 12px 32px rgba(64,100,138,.12)",
