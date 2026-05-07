@@ -10,6 +10,7 @@ import {
 import { db } from "./firebase";
 import React, { useMemo, useState } from "react";
 import "./App.css";
+
 const paymentFilters = ["全部", "待匯定", "等待款項確認中", "未付款", "已付款"];
 
 const CUSTOMER_SERVICE_LINK = "https://lin.ee/NQwZi4A";
@@ -29,6 +30,7 @@ export default function App() {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showCodeModal, setShowCodeModal] = useState(false);
   const [lastFive, setLastFive] = useState("");
+  const [isReportPressed, setIsReportPressed] = useState(false);
 
   const openCustomerService = () => {
     window.open(CUSTOMER_SERVICE_LINK, "_blank");
@@ -142,7 +144,7 @@ export default function App() {
             <div style={styles.heroImage}></div>
 
             <section style={styles.homeFormCard}>
-              <h2 style={styles.title}>🔎 查詢訂單</h2>
+              <h2 style={styles.title}> 查詢訂單</h2>
               <p style={styles.helperText}>輸入社群暱稱，查詢您的訂單進度 ☁️</p>
 
               <input
@@ -153,7 +155,7 @@ export default function App() {
               />
 
               <button style={styles.primaryBtn} onClick={checkNickname}>
-                查詢我的訂單🧾
+              🔎查詢我的訂單
               </button>
             </section>
           </>
@@ -270,7 +272,7 @@ export default function App() {
 
         {step === 3 && selectedOrder && (
           <section style={styles.card}>
-            <button style={styles.backBtn} onClick={() => setStep(2)}>
+            <button style={styles.backBtnSmall} onClick={() => setStep(2)}>
               ← 返回
             </button>
 
@@ -389,7 +391,7 @@ export default function App() {
                     💳 點我付款
                   </button>
                 ) : selectedOrder.paymentStatus === "等待款項確認中" ? (
-                  <button style={styles.secondaryBtn}>⏳ 等待款項確認中</button>
+                  <button style={styles.waitingBtn}>⏳ 等待款項確認中</button>
                 ) : (
                   <button
                     style={styles.secondaryBtn}
@@ -405,7 +407,7 @@ export default function App() {
 
         {step === 5 && (
           <section style={styles.card}>
-            <button style={styles.backBtn} onClick={() => setStep(1)}>
+            <button style={styles.backBtnSmall} onClick={() => setStep(1)}>
               ← 返回首頁
             </button>
             <img
@@ -433,8 +435,8 @@ export default function App() {
         <Modal>
           <h2 style={styles.modalTitle}>匯款資訊</h2>
           <div style={styles.paymentInfo}>
-            <p style={styles.paymentLine}>轉帳請備注社群暱稱💌</p>
-            <p style={styles.paymentLine}>例如：麋鹿 / 咖醬的狗</p>
+            <p style={styles.paymentNote}>轉帳請備註社群暱稱💌</p>
+            <p style={styles.paymentExample}>例如：麋鹿 / 咖醬的狗</p>
 
             <p style={styles.paymentGroup}>🦌 可轉帳 / 無卡帳號 ↓</p>
             <p style={styles.paymentLine}>台新（812）28881013405739</p>
@@ -491,7 +493,18 @@ export default function App() {
             </div>
           )}
 
-          <button style={styles.primaryBtn} onClick={reportPayment}>
+          <button
+            style={{
+              ...styles.primaryBtn,
+              ...(isReportPressed ? styles.primaryBtnPressed : {}),
+            }}
+            onTouchStart={() => setIsReportPressed(true)}
+            onTouchEnd={() => setIsReportPressed(false)}
+            onMouseDown={() => setIsReportPressed(true)}
+            onMouseUp={() => setIsReportPressed(false)}
+            onMouseLeave={() => setIsReportPressed(false)}
+            onClick={reportPayment}
+          >
             通知已匯款
           </button>
           <button
@@ -525,7 +538,7 @@ function Modal({ children }) {
 
 const styles = {
   page: {
-    minHeight: "100vh",
+    minHeight: "100dvh",
     background: "#dce9f7",
     padding: 12,
     fontFamily:
@@ -537,17 +550,17 @@ const styles = {
   },
   panel: {
     maxWidth: 430,
-    minHeight: "92vh",
+    minHeight: "auto",
     margin: "0 auto",
     background: "#fff8ea",
-    padding: 18,
+    padding: "18px 18px 24px",
     borderLeft: "6px solid #5377bd",
     borderRight: "6px solid #5377bd",
     boxShadow: "0 12px 32px rgba(64,100,138,.12)",
   },
   header: {
     textAlign: "center",
-    padding: "6px 0 14px",
+    padding: "6px 0 12px",
   },
   finalDeerImage: {
     width: 110,
@@ -572,14 +585,14 @@ const styles = {
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    marginBottom: -30,
+    marginBottom: -26,
   },
   homeFormCard: {
     background: "#fffdfa",
     padding: 20,
     border: "3px solid #163f66",
     boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
-    marginBottom: 22,
+    marginBottom: 0,
     position: "relative",
     zIndex: 2,
   },
@@ -588,7 +601,7 @@ const styles = {
     padding: 20,
     border: "3px solid #163f66",
     boxShadow: "5px 5px 0 rgba(22,63,102,.24)",
-    marginBottom: 22,
+    marginBottom: 18,
   },
   title: {
     textAlign: "center",
@@ -629,6 +642,24 @@ const styles = {
     fontWeight: 800,
     cursor: "pointer",
     boxShadow: "4px 4px 0 rgba(22,63,102,.24)",
+    transition: "transform .08s ease, box-shadow .08s ease, filter .08s ease",
+  },
+  primaryBtnPressed: {
+    transform: "translateY(3px)",
+    boxShadow: "1px 1px 0 rgba(22,63,102,.35)",
+    filter: "brightness(0.94)",
+  },
+  waitingBtn: {
+    width: "100%",
+    marginTop: 14,
+    padding: "13px 12px",
+    border: "2px solid #163f66",
+    background: "#fff8ea",
+    color: "#163f66",
+    fontSize: 16,
+    fontWeight: 800,
+    cursor: "default",
+    boxShadow: "4px 4px 0 rgba(22,63,102,.20)",
   },
   secondaryBtn: {
     width: "100%",
@@ -650,6 +681,18 @@ const styles = {
     fontSize: 14,
     marginBottom: 12,
     padding: "7px 11px",
+    cursor: "pointer",
+    display: "block",
+    marginRight: "auto",
+  },
+  backBtnSmall: {
+    border: "2px solid #163f66",
+    background: "#fff8ea",
+    color: "#163f66",
+    fontWeight: 800,
+    fontSize: 12,
+    marginBottom: 12,
+    padding: "5px 9px",
     cursor: "pointer",
     display: "block",
     marginRight: "auto",
@@ -699,7 +742,7 @@ const styles = {
     lineHeight: 1.2,
   },
   filterTabActive: {
-    background: "#83bde8",
+    background: "#2f86d4",
     color: "#fff",
   },
   filterGroups: {
@@ -734,7 +777,7 @@ const styles = {
     lineHeight: 1.2,
   },
   chipActive: {
-    background: "#5f83d1",
+    background: "#2f86d4",
     color: "#fff",
   },
   orderCard: {
@@ -753,7 +796,7 @@ const styles = {
     marginBottom: 14,
   },
   tagBlue: {
-    background: "#5f83d1",
+    background: "#2f86d4",
     color: "#fff",
     padding: "6px 10px",
     fontSize: 12,
@@ -875,6 +918,9 @@ const styles = {
     padding: "11px 10px",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     gap: 5,
     fontWeight: 800,
     minHeight: 72,
@@ -884,11 +930,13 @@ const styles = {
     fontSize: 12,
     lineHeight: 1.2,
     whiteSpace: "nowrap",
+    textAlign: "center",
   },
   infoValue: {
     fontSize: 13,
     lineHeight: 1.2,
     whiteSpace: "nowrap",
+    textAlign: "center",
   },
   detailBox: {
     marginTop: 14,
@@ -960,6 +1008,19 @@ const styles = {
     padding: "10px 11px",
     lineHeight: 1.35,
     fontSize: 13,
+    textAlign: "center",
+  },
+  paymentNote: {
+    margin: "4px 0 6px",
+    lineHeight: 1.35,
+    fontSize: 15,
+    fontWeight: 900,
+  },
+  paymentExample: {
+    margin: "2px 0 8px",
+    lineHeight: 1.35,
+    fontSize: 12,
+    fontWeight: 800,
   },
   paymentLine: {
     margin: "4px 0",
