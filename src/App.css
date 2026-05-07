@@ -1,70 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-input::placeholder {
-  color: #9aa8b8 !important;
-  -webkit-text-fill-color: #9aa8b8 !important;
-  opacity: 1 !important;
-}
-.payment-status-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.statusRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.statusBtn {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: 2px solid #163f66;
-  background: white;
-  color: #163f66;
-  font-weight: 700;
-  white-space: nowrap;
+body {
+  display: block;
+  min-width: 320px;
+  background: #dce9f7;
 }
