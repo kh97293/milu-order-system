@@ -260,9 +260,7 @@ export default function App() {
               background: active ? c.activeBg : "#fffdfa",
               color: active ? c.activeColor : "#163f66",
               
-              border: active
-                ? "2px solid " + c.activeBg
-                : "2px solid #163f66",
+              border:"2px solid #163f66",
               boxShadow: active
                 ? "0 4px 10px rgba(0,0,0,.12)"
                 : "2px 2px 0 rgba(22,63,102,.14)",
