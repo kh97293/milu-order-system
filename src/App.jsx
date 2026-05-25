@@ -11,12 +11,12 @@ import { db } from "./firebase";
 import React, { useMemo, useState } from "react";
 import "./App.css";
 
-const paymentFilters = ["全部", "待匯定", "等待款項確認中", "未付款", "已付款"];
+const paymentFilters = ["全部", "待匯定", "等待款項確認", "未付款", "已匯款", "已貨付"];
 
 const CUSTOMER_SERVICE_LINK = "https://lin.ee/NQwZi4A";
 
 const PAYMENT_REPORT_WEBAPP_URL =
-  "https://script.google.com/macros/s/AKfycbycG2dD6dKiPIkgG5ecUZGVZB3hPdBYFw55RYGiPNSVoi9bLf5zWajj97MfDo9SRFcAZw/exec";
+  "c";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -40,8 +40,13 @@ export default function App() {
     let list = orders;
     if (mainFilter === "已登記")
       return list.filter((o) => o.phase === "已登記");
-    if (mainFilter === "已購入") {
-      list = list.filter((o) => o.phase === "已購入");
+    if (mainFilter === "已完成訂單") {
+      return list.filter((o) => o.shippingStatus === "已取貨");
+    }
+        if (mainFilter === "已購入") {
+      list = list.filter(
+        (o) => o.phase === "已購入" && o.shippingStatus !== "已取貨"
+      );
       if (paymentFilter !== "全部")
         list = list.filter((o) => o.paymentStatus === paymentFilter);
       if (shippingFilter !== "全部")
@@ -108,7 +113,7 @@ export default function App() {
         paymentReport,
         paymentReportStatus: "已通知匯款",
         paymentReportedAt: serverTimestamp(),
-        paymentStatus: "等待款項確認中",
+        paymentStatus: "等待款項確認",
       });
 
       await fetch(PAYMENT_REPORT_WEBAPP_URL, {
@@ -176,7 +181,7 @@ export default function App() {
               </div>
 
               <div style={styles.mainTabs}>
-                {["全部", "已登記", "已購入"].map((filter) => (
+              {["全部", "已登記", "已購入", "已完成訂單"].map((filter) => (
                   <button
                     key={filter}
                     style={{
@@ -189,39 +194,89 @@ export default function App() {
                       setShippingFilter("全部");
                     }}
                   >
-                    {filter === "全部"
-                      ? "📂 全部"
-                      : filter === "已登記"
-                      ? "📑已登記"
-                      : "🛍️ 已購入"}
+                  {filter === "全部"
+  ? "📂 全部"
+  : filter === "已登記"
+  ? "📑已登記"
+  : filter === "已購入"
+  ? "🛍️ 已購入"
+  : "✅ 已完成訂單"}
                   </button>
                 ))}
               </div>
 
               {mainFilter === "已購入" && (
-                <div style={styles.filterGroups}>
-                  <div style={styles.filterLabel}>💳 付款狀態</div>
-                  <div style={styles.chipWrap}>
-                    {paymentFilters.map((filter) => (
-                      <button
-                        key={filter}
-                        style={{
-                          ...styles.chip,
-                          ...(filter === "等待款項確認中"
-                            ? styles.longChip
-                            : {}),
-                          ...(paymentFilter === filter ? styles.chipActive : {}),
-                        }}
-                        onClick={() => setPaymentFilter(filter)}
-                      >
-                        {filter}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </section>
+  <div style={styles.filterGroups}>
+    <div style={styles.filterLabel}>💳 付款狀態</div>
 
+    <div style={styles.chipWrap}>
+      {paymentFilters.map((filter) => {
+        const active = paymentFilter === filter;
+
+        const paymentTabColors = {
+          全部: {
+            color: "#6b7280",
+            activeBg: "#bcc7d9",
+            activeColor: "#ffffff",
+          },
+        
+          待匯定: {
+            color: "#b38b5e",
+            activeBg: "#e7c79f",
+            activeColor: "#ffffff",
+          },
+        
+          等待款項確認: {
+            color: "#b77b63",
+            activeBg: "#e6b7a5",
+            activeColor: "#ffffff",
+          },
+        
+          未付款: {
+            color: "#bc7474",
+            activeBg: "#e1a6a6",
+            activeColor: "#ffffff",
+          },
+        
+          已匯款: {
+            color: "#6e9296",
+            activeBg: "#7fbec4",
+            activeColor: "#ffffff",
+          },
+        
+          已貨付: {
+            color: "#8a78a5",
+            activeBg: "#c1b1de",
+            activeColor: "#ffffff",
+          },
+        };
+        const c = paymentTabColors[filter];
+
+        return (
+          <button
+            key={filter}
+            style={{
+              ...styles.chip,
+              background: active ? c.activeBg : "#fffdfa",
+              color: active ? c.activeColor : "#163f66",
+              
+              border: active
+                ? "2px solid " + c.activeBg
+                : "2px solid #163f66",
+              boxShadow: active
+                ? "0 4px 10px rgba(0,0,0,.12)"
+                : "2px 2px 0 rgba(22,63,102,.14)",
+            }}
+            onClick={() => setPaymentFilter(filter)}
+          >
+            {filter}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+)}
+            </section>
             {filteredOrders.length === 0 ? (
               <section style={styles.emptyCard}>
                 <img
@@ -286,7 +341,7 @@ export default function App() {
                 <div style={styles.detailHeader}>
                   <div style={styles.titleRow}>
                     <h2 style={styles.orderTitle}>{selectedOrder.groupName}</h2>
-                    <div style={styles.noticeBox}>⏳ 等待通知匯款中</div>
+                    <div style={styles.noticeBox}>⏳ 等待通知匯款</div>
                   </div>
 
                   <div style={styles.infoOne}>
@@ -395,8 +450,8 @@ export default function App() {
                   >
                     💳 點我付款
                   </button>
-                ) : selectedOrder.paymentStatus === "等待款項確認中" ? (
-                  <button style={styles.waitingBtn}>⏳ 等待款項確認中</button>
+                ) : selectedOrder.paymentStatus === "等待款項確認" ? (
+                  <button style={styles.waitingBtn}>⏳ 等待款項確認</button>
                 ) : (
                   <button
                     style={styles.secondaryBtn}
@@ -604,7 +659,7 @@ const styles = {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     margin: "0 auto -40px",
-  },meFormCard: {
+  },homeFormCard: {
     width: "100%",
     maxWidth: 360,
     margin: "0 auto",
@@ -743,7 +798,7 @@ const styles = {
   },
   mainTabs: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    gridTemplateColumns: "repeat(2, 1fr)",
     gap: 7,
   },
   filterTab: {
@@ -777,7 +832,7 @@ const styles = {
   },
   chipWrap: {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(3, 1fr)",
     gap: 8,
     marginTop: 8,
   },
@@ -798,9 +853,7 @@ const styles = {
     boxSizing: "border-box",
     boxShadow: "2px 2px 0 rgba(22,63,102,.14)",
   },
-  longChip: {
-    gridColumn: "span 2",
-  },
+ 
   chipActive: {
     background: "#2f86d4",
     color: "#fff",
