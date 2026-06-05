@@ -57,37 +57,52 @@ export default function App() {
   }, [orders, mainFilter, paymentFilter, shippingFilter]);
 
   const checkNickname = async () => {
-    const q = query(
-      collection(db, "orders"),
-      where("nickname", "==", nickname.trim())
-    );
-
-    const snapshot = await getDocs(q);
-
-    if (snapshot.empty) {
-      setShowError(true);
+    const keyword = nickname.trim();
+  
+    if (!keyword) {
+      alert("請輸入社群暱稱");
       return;
     }
-
-    const result = snapshot.docs.map((doc) => {
-      const data = doc.data();
-
-      return {
-        id: doc.id,
-        groupName: data.groupName,
-        phase: data.status,
-        paymentStatus: data.paymentStatus,
-        shippingStatus: data.shippingStatus,
-        itemCount: data.totalItems,
-        totalAmount: data.totalAmount,
-        items: data.items || [],
-      };
-    });
-
-    setOrders(result);
-    setStep(2);
+  
+    try {
+      const q = query(
+        collection(db, "orders"),
+        where("nickname", "==", keyword)
+      );
+  
+      const snapshot = await getDocs(q);
+  
+      if (snapshot.empty) {
+        setShowError(true);
+        return;
+      }
+  
+      const result = snapshot.docs.map((doc) => {
+        const data = doc.data();
+  
+        return {
+          id: doc.id,
+          groupName: data.groupName || "",
+          phase: data.status || "",
+          paymentStatus: data.paymentStatus || "",
+          shippingStatus: data.shippingStatus || "",
+          itemCount: data.totalItems || 0,
+          totalAmount: data.totalAmount || 0,
+          items: data.items || [],
+        };
+      });
+  
+      setOrders(result);
+      setStep(2);
+  
+    } catch (error) {
+      console.error("查詢失敗：", error);
+  
+      alert(
+        "目前查詢系統忙碌中，請稍後再試，或聯絡客服協助查詢"
+      );
+    }
   };
-
   const deposit = selectedOrder
     ? Math.floor(selectedOrder.totalAmount * 0.5)
     : 0;
