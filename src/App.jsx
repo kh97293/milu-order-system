@@ -431,14 +431,23 @@ export default function App() {
                       label="總金額"
                       value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
                     />
-                    <Info
-                      label="應付訂金 50%"
-                      value={`NT$ ${deposit.toLocaleString()}`}
-                    />
-                    <Info
-                      label="應付尾款"
-                      value={`NT$ ${finalPayment.toLocaleString()}`}
-                    />
+                   {selectedOrder.shippingStatus === "已取貨" ? (
+  <Info
+    label="已付總額"
+    value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
+  />
+) : (
+  <>
+    <Info
+      label="應付訂金 50%"
+      value={`NT$ ${deposit.toLocaleString()}`}
+    />
+    <Info
+      label="應付尾款"
+      value={`NT$ ${finalPayment.toLocaleString()}`}
+    />
+  </>
+)}
                   </div>
                 )}
 
