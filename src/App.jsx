@@ -16,7 +16,7 @@ const paymentFilters = ["全部", "待匯定", "等待款項確認", "未付款"
 const CUSTOMER_SERVICE_LINK = "https://lin.ee/NQwZi4A";
 
 const PAYMENT_REPORT_WEBAPP_URL =
-  "c";
+  "https://script.google.com/macros/s/AKfycbycG2dD6dKiPIkgG5ecUZGVZB3hPdBYFw55RYGiPNSVoi9bLf5zWajj97MfDo9SRFcAZw/exec";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -411,45 +411,49 @@ export default function App() {
                 )}
 
                 {selectedOrder.paymentStatus === "未付款" ? (
-                  <div style={styles.infoGrid}>
-                    <Info
-                      label="商品總數"
-                      value={`${selectedOrder.itemCount} 件`}
-                    />
-                    <Info
-                      label="總金額"
-                      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
-                    />
-                  </div>
-                ) : (
-                  <div style={styles.infoGrid}>
-                    <Info
-                      label="商品總數"
-                      value={`${selectedOrder.itemCount} 件`}
-                    />
-                    <Info
-                      label="總金額"
-                      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
-                    />
-                   {selectedOrder.shippingStatus === "已取貨" ? (
-  <Info
-    label="已付總額"
-    value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
-  />
+  <div style={styles.infoGrid}>
+    <Info
+      label="商品總數"
+      value={`${selectedOrder.itemCount} 件`}
+    />
+    <Info
+      label="總金額"
+      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
+    />
+  </div>
 ) : (
-  <>
+  <div style={styles.infoGrid}>
     <Info
-      label="應付訂金 50%"
-      value={`NT$ ${deposit.toLocaleString()}`}
+      label="商品總數"
+      value={`${selectedOrder.itemCount} 件`}
     />
     <Info
-      label="應付尾款"
-      value={`NT$ ${finalPayment.toLocaleString()}`}
+      label="總金額"
+      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
     />
-  </>
+
+    {selectedOrder.shippingStatus === "已取貨" ? (
+      <>
+        <Info label="商品狀態" value="已完成" />
+        <Info
+          label="已付總額"
+          value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
+        />
+      </>
+    ) : (
+      <>
+        <Info
+          label="應付訂金 50%"
+          value={`NT$ ${deposit.toLocaleString()}`}
+        />
+        <Info
+          label="應付尾款"
+          value={`NT$ ${finalPayment.toLocaleString()}`}
+        />
+      </>
+    )}
+  </div>
 )}
-                  </div>
-                )}
 
                 <div style={styles.detailBox}>
                   <h3 style={styles.sectionTitle}>購買商品明細🧾</h3>
