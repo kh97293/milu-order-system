@@ -40,7 +40,7 @@ export default function App() {
     let list = orders;
     if (mainFilter === "已登記")
       return list.filter((o) => o.phase === "已登記");
-    if (mainFilter === "已完成訂單") {
+    if (mainFilter === "已完成") {
       return list.filter((o) => o.shippingStatus === "已取貨");
     }
         if (mainFilter === "已購入") {
@@ -196,7 +196,7 @@ export default function App() {
               </div>
 
               <div style={styles.mainTabs}>
-              {["全部", "已登記", "已購入", "已完成訂單"].map((filter) => (
+              {["全部", "已登記", "已購入", "已完成"].map((filter) => (
                   <button
                     key={filter}
                     style={{
@@ -215,7 +215,7 @@ export default function App() {
   ? "📑已登記"
   : filter === "已購入"
   ? "🛍️ 已購入"
-  : "✅ 已完成訂單"}
+  : "✅ 已完成"}
                   </button>
                 ))}
               </div>
