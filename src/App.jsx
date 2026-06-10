@@ -533,19 +533,15 @@ export default function App() {
             <p style={styles.paymentExample}>例如：麋鹿 / 咖醬的狗</p>
 
             <p style={styles.paymentGroup}>🦌 可轉帳 / 無卡帳號 ↓</p>
-            <p style={styles.paymentLine}>台新（812）28881013405739</p>
-            <p style={styles.paymentLine}>中信（822）193540210513</p>
-            <p style={styles.paymentLine}>國泰（013）699508481385</p>
-
-            <p style={styles.paymentGroup}>
-              🐶 鏈鋸人快閃 / 韓國連線專用帳號 ↓
-            </p>
-            <p style={styles.paymentLine}>台新（812）28881011587005</p>
-            <p style={styles.paymentLine}>聯邦（803）888504565944</p>
+            <div style={styles.bankBox}>
+  <p style={styles.paymentLine}>台新（812）28881013405739</p>
+  <p style={styles.paymentLine}>中信（822）193540210513</p>
+  <p style={styles.paymentLine}>國泰（013）699508481385</p>
+</div>
 
             <p style={styles.paymentAmount}>
-              需付款金額：<strong>NT$ {deposit.toLocaleString()}</strong>
-            </p>
+  需付款金額：NT$ {deposit.toLocaleString()}
+</p>
           </div>
 
           <button
@@ -1132,18 +1128,42 @@ const styles = {
     fontWeight: 800,
   },
   paymentLine: {
-    margin: "4px 0",
-    lineHeight: 1.35,
+    textAlign: "left",
+    fontSize: 14,
+    marginBottom: 8,
+    color: "#163f66",
+    fontWeight: 700,
+    whiteSpace: "pre",
+  },
+  
+  bankBox: {
+    width: "fit-content",
+    margin: "0 auto",
+  },
+  
+  bankName: {
+    textAlign: "left",
+    whiteSpace: "nowrap",
+  },
+  
+  bankAccount: {
+    textAlign: "left",
+    whiteSpace: "nowrap",
   },
   paymentGroup: {
-    margin: "10px 0 4px",
-    lineHeight: 1.35,
-    fontWeight: 900,
+    fontSize: 15,
+    fontWeight: 700,
+    color: "#163f66",
+    marginTop: 12,
+    marginBottom: 8,
+    textAlign: "center",
   },
   paymentAmount: {
-    margin: "10px 0 2px",
-    lineHeight: 1.35,
+    marginTop: 18,
+    fontSize: 22,
     fontWeight: 900,
+    color: "#163f66",
+    textAlign: "center",
   },
   confirmBox: {
     background: "#eef6ff",
