@@ -11,7 +11,7 @@ import { db } from "./firebase";
 import React, { useMemo, useState } from "react";
 import "./App.css";
 
-const paymentFilters = ["全部", "待匯定", "等待款項確認", "未付款", "已匯款", "已貨付"];
+const paymentFilters = ["全部", "待匯定", "等待確認", "未付款", "已匯款", "已貨付"];
 
 const CUSTOMER_SERVICE_LINK = "https://lin.ee/NQwZi4A";
 
@@ -128,7 +128,7 @@ export default function App() {
         paymentReport,
         paymentReportStatus: "已通知匯款",
         paymentReportedAt: serverTimestamp(),
-        paymentStatus: "等待款項確認",
+        paymentStatus: "等待確認",
       });
 
       await fetch(PAYMENT_REPORT_WEBAPP_URL, {
@@ -241,7 +241,7 @@ export default function App() {
             activeColor: "#ffffff",
           },
         
-          等待款項確認: {
+          等待確認: {
             color: "#b77b63",
             activeBg: "#e6b7a5",
             activeColor: "#ffffff",
@@ -406,7 +406,7 @@ export default function App() {
 
                 {selectedOrder.paymentStatus === "未付款" && (
                   <p style={styles.smallNotice}>
-                    商品未滿NT1000元，等待官方通知
+                    商品未滿NT1000元，等待麋鹿通知
                   </p>
                 )}
 
@@ -476,8 +476,8 @@ export default function App() {
                   >
                     💳 點我付款
                   </button>
-                ) : selectedOrder.paymentStatus === "等待款項確認" ? (
-                  <button style={styles.waitingBtn}>⏳ 等待款項確認</button>
+                ) : selectedOrder.paymentStatus === "等待確認" ? (
+                  <button style={styles.waitingBtn}>⏳ 等待確認</button>
                 ) : (
                   <button
                     style={styles.secondaryBtn}
