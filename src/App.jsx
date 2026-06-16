@@ -1188,8 +1188,8 @@ const styles = {
     textAlign: "center",
   },
   paymentAmount: {
-    marginTop: 18,
-    fontSize: 22,
+    marginTop: 16,
+    fontSize: 18,
     fontWeight: 900,
     color: "#163f66",
     textAlign: "center",
