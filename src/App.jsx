@@ -367,7 +367,7 @@ export default function App() {
   <div style={styles.noticeSubText}>
  未滿 NT$1000，通知下單
     <br />
-    滿 NT$1000，通知匯款訂金
+    滿 NT$1000，通知匯款定金
   </div>
 </div>
                   </div>
@@ -460,8 +460,8 @@ export default function App() {
                         <Info
   label={
     selectedOrder.paymentStatus === "已匯款"
-      ? "已付訂金 50%"
-      : "應付訂金 50%"
+      ? "已付定金 50%"
+      : "應付定金 50%"
   }
   value={`NT$ ${deposit.toLocaleString()}`}
 />
