@@ -91,7 +91,10 @@ export default function App() {
           id: doc.id,
           groupName: data.groupName || "",
           phase: data.status || "",
-          paymentStatus: data.paymentStatus || "",
+          paymentStatus:
+          data.paymentStatus === "已付款"
+            ? "已匯款"
+            : data.paymentStatus || "",
           shippingStatus: data.shippingStatus || "",
           itemCount: data.totalItems || 0,
           totalAmount: data.totalAmount || 0,
@@ -489,7 +492,7 @@ export default function App() {
                     💳 點我付款
                   </button>
                 ) : selectedOrder.paymentStatus === "等待確認" ? (
-                  <button style={styles.waitingBtn}>⏳ 等待確認</button>
+                  <button style={styles.waitingBtn}>⏳ 等待款項確認中</button>
                 ) : (
                   <button
                     style={styles.secondaryBtn}
@@ -757,14 +760,16 @@ const styles = {
   waitingBtn: {
     width: "100%",
     marginTop: 14,
-    padding: "13px 12px",
+    padding: "10px 12px",
     border: "2px solid #163f66",
     background: "#fff8ea",
     color: "#163f66",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 800,
     cursor: "default",
-    boxShadow: "4px 4px 0 rgba(22,63,102,.20)",
+    fontFamily: "inherit",
+    boxShadow: "3px 3px 0 rgba(22,63,102,.18)",
+    pointerEvents: "none", // 完全不能點
   },
   secondaryBtn: {
     width: "100%",
