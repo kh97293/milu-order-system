@@ -11,7 +11,14 @@ import { db } from "./firebase";
 import React, { useMemo, useState } from "react";
 import "./App.css";
 
-const paymentFilters = ["全部", "待匯定", "等待確認", "未付款", "已匯款", "已貨付"];
+const paymentFilters = [
+  "全部",
+  "待匯定",
+  "等待確認",
+  "未付款",
+  "已匯款",
+  "已貨付",
+];
 
 const CUSTOMER_SERVICE_LINK = "https://lin.ee/NQwZi4A";
 
@@ -43,7 +50,7 @@ export default function App() {
     if (mainFilter === "已完成") {
       return list.filter((o) => o.shippingStatus === "已取貨");
     }
-        if (mainFilter === "已購入") {
+    if (mainFilter === "已購入") {
       list = list.filter(
         (o) => o.phase === "已購入" && o.shippingStatus !== "已取貨"
       );
@@ -58,28 +65,28 @@ export default function App() {
 
   const checkNickname = async () => {
     const keyword = nickname.trim();
-  
+
     if (!keyword) {
       alert("請輸入社群暱稱");
       return;
     }
-  
+
     try {
       const q = query(
         collection(db, "orders"),
         where("nickname", "==", keyword)
       );
-  
+
       const snapshot = await getDocs(q);
-  
+
       if (snapshot.empty) {
         setShowError(true);
         return;
       }
-  
+
       const result = snapshot.docs.map((doc) => {
         const data = doc.data();
-  
+
         return {
           id: doc.id,
           groupName: data.groupName || "",
@@ -91,16 +98,13 @@ export default function App() {
           items: data.items || [],
         };
       });
-  
+
       setOrders(result);
       setStep(2);
-  
     } catch (error) {
       console.error("查詢失敗：", error);
-  
-      alert(
-        "目前查詢系統忙碌中，請稍後再試，或聯絡客服協助查詢"
-      );
+
+      alert("目前查詢系統忙碌中，請稍後再試，或聯絡客服協助查詢");
     }
   };
   const deposit = selectedOrder
@@ -196,7 +200,7 @@ export default function App() {
               </div>
 
               <div style={styles.mainTabs}>
-              {["全部", "已登記", "已購入", "已完成"].map((filter) => (
+                {["全部", "已登記", "已購入", "已完成"].map((filter) => (
                   <button
                     key={filter}
                     style={{
@@ -209,86 +213,86 @@ export default function App() {
                       setShippingFilter("全部");
                     }}
                   >
-                  {filter === "全部"
-  ? "📂 全部"
-  : filter === "已登記"
-  ? "📑已登記"
-  : filter === "已購入"
-  ? "🛍️ 已購入"
-  : "✅ 已完成"}
+                    {filter === "全部"
+                      ? "📂 全部"
+                      : filter === "已登記"
+                      ? "📑已登記"
+                      : filter === "已購入"
+                      ? "🛍️ 已購入"
+                      : "✅ 已完成"}
                   </button>
                 ))}
               </div>
 
               {mainFilter === "已購入" && (
-  <div style={styles.filterGroups}>
-    <div style={styles.filterLabel}>💳 付款狀態</div>
+                <div style={styles.filterGroups}>
+                  <div style={styles.filterLabel}>💳 付款狀態</div>
 
-    <div style={styles.chipWrap}>
-      {paymentFilters.map((filter) => {
-        const active = paymentFilter === filter;
+                  <div style={styles.chipWrap}>
+                    {paymentFilters.map((filter) => {
+                      const active = paymentFilter === filter;
 
-        const paymentTabColors = {
-          全部: {
-            color: "#6b7280",
-            activeBg: "#bcc7d9",
-            activeColor: "#ffffff",
-          },
-        
-          待匯定: {
-            color: "#b38b5e",
-            activeBg: "#e7c79f",
-            activeColor: "#ffffff",
-          },
-        
-          等待確認: {
-            color: "#b77b63",
-            activeBg: "#e6b7a5",
-            activeColor: "#ffffff",
-          },
-        
-          未付款: {
-            color: "#bc7474",
-            activeBg: "#e1a6a6",
-            activeColor: "#ffffff",
-          },
-        
-          已匯款: {
-            color: "#6e9296",
-            activeBg: "#7fbec4",
-            activeColor: "#ffffff",
-          },
-        
-          已貨付: {
-            color: "#8a78a5",
-            activeBg: "#c1b1de",
-            activeColor: "#ffffff",
-          },
-        };
-        const c = paymentTabColors[filter];
+                      const paymentTabColors = {
+                        全部: {
+                          color: "#6b7280",
+                          activeBg: "#bcc7d9",
+                          activeColor: "#ffffff",
+                        },
 
-        return (
-          <button
-            key={filter}
-            style={{
-              ...styles.chip,
-              background: active ? c.activeBg : "#fffdfa",
-              color: active ? c.activeColor : "#163f66",
-              
-              border:"2px solid #163f66",
-              boxShadow: active
-                ? "0 4px 10px rgba(0,0,0,.12)"
-                : "2px 2px 0 rgba(22,63,102,.14)",
-            }}
-            onClick={() => setPaymentFilter(filter)}
-          >
-            {filter}
-          </button>
-        );
-      })}
-    </div>
-  </div>
-)}
+                        待匯定: {
+                          color: "#b38b5e",
+                          activeBg: "#e7c79f",
+                          activeColor: "#ffffff",
+                        },
+
+                        等待確認: {
+                          color: "#b77b63",
+                          activeBg: "#e6b7a5",
+                          activeColor: "#ffffff",
+                        },
+
+                        未付款: {
+                          color: "#bc7474",
+                          activeBg: "#e1a6a6",
+                          activeColor: "#ffffff",
+                        },
+
+                        已匯款: {
+                          color: "#6e9296",
+                          activeBg: "#7fbec4",
+                          activeColor: "#ffffff",
+                        },
+
+                        已貨付: {
+                          color: "#8a78a5",
+                          activeBg: "#c1b1de",
+                          activeColor: "#ffffff",
+                        },
+                      };
+                      const c = paymentTabColors[filter];
+
+                      return (
+                        <button
+                          key={filter}
+                          style={{
+                            ...styles.chip,
+                            background: active ? c.activeBg : "#fffdfa",
+                            color: active ? c.activeColor : "#163f66",
+
+                            border: "2px solid #163f66",
+                            boxShadow: active
+                              ? "0 4px 10px rgba(0,0,0,.12)"
+                              : "2px 2px 0 rgba(22,63,102,.14)",
+                          }}
+                          onClick={() => setPaymentFilter(filter)}
+                        >
+                          {filter}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </section>
             {filteredOrders.length === 0 ? (
               <section style={styles.emptyCard}>
@@ -354,7 +358,15 @@ export default function App() {
                 <div style={styles.detailHeader}>
                   <div style={styles.titleRow}>
                     <h2 style={styles.orderTitle}>{selectedOrder.groupName}</h2>
-                    <div style={styles.noticeBox}>⏳ 等待通知匯款</div>
+                    <div style={styles.noticeBoxWrap}>
+  <div style={styles.noticeBox}>⏳ 等待官方通知</div>
+
+  <div style={styles.noticeSubText}>
+ 未滿 NT$1000，通知下單
+    <br />
+    滿 NT$1000，通知匯款訂金
+  </div>
+</div>
                   </div>
 
                   <div style={styles.infoOne}>
@@ -406,54 +418,54 @@ export default function App() {
 
                 {selectedOrder.paymentStatus === "未付款" && (
                   <p style={styles.smallNotice}>
-                    商品未滿NT1000元，等待麋鹿通知
+                    商品未滿NT1000元，等待麋鹿通知下單
                   </p>
                 )}
 
                 {selectedOrder.paymentStatus === "未付款" ? (
-  <div style={styles.infoGrid}>
-    <Info
-      label="商品總數"
-      value={`${selectedOrder.itemCount} 件`}
-    />
-    <Info
-      label="總金額"
-      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
-    />
-  </div>
-) : (
-  <div style={styles.infoGrid}>
-    <Info
-      label="商品總數"
-      value={`${selectedOrder.itemCount} 件`}
-    />
-    <Info
-      label="總金額"
-      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
-    />
+                  <div style={styles.infoGrid}>
+                    <Info
+                      label="商品總數"
+                      value={`${selectedOrder.itemCount} 件`}
+                    />
+                    <Info
+                      label="總金額"
+                      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
+                    />
+                  </div>
+                ) : (
+                  <div style={styles.infoGrid}>
+                    <Info
+                      label="商品總數"
+                      value={`${selectedOrder.itemCount} 件`}
+                    />
+                    <Info
+                      label="總金額"
+                      value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
+                    />
 
-    {selectedOrder.shippingStatus === "已取貨" ? (
-      <>
-        <Info label="商品狀態" value="已完成" />
-        <Info
-          label="已付總額"
-          value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
-        />
-      </>
-    ) : (
-      <>
-        <Info
-          label="應付訂金 50%"
-          value={`NT$ ${deposit.toLocaleString()}`}
-        />
-        <Info
-          label="應付尾款"
-          value={`NT$ ${finalPayment.toLocaleString()}`}
-        />
-      </>
-    )}
-  </div>
-)}
+                    {selectedOrder.shippingStatus === "已取貨" ? (
+                      <>
+                        <Info label="商品狀態" value="已完成" />
+                        <Info
+                          label="已付總額"
+                          value={`NT$ ${selectedOrder.totalAmount.toLocaleString()}`}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Info
+                          label="應付訂金 50%"
+                          value={`NT$ ${deposit.toLocaleString()}`}
+                        />
+                        <Info
+                          label="應付尾款"
+                          value={`NT$ ${finalPayment.toLocaleString()}`}
+                        />
+                      </>
+                    )}
+                  </div>
+                )}
 
                 <div style={styles.detailBox}>
                   <h3 style={styles.sectionTitle}>購買商品明細🧾</h3>
@@ -510,9 +522,7 @@ export default function App() {
           </section>
         )}
 
-        <footer style={styles.footer}>
-          © 咪路麋鹿動漫代購｜訂單查詢系統
-        </footer>
+        <footer style={styles.footer}>© 咪路麋鹿動漫代購｜訂單查詢系統</footer>
       </main>
 
       {showError && (
@@ -534,14 +544,14 @@ export default function App() {
 
             <p style={styles.paymentGroup}>🦌 可轉帳 / 無卡帳號 ↓</p>
             <div style={styles.bankBox}>
-  <p style={styles.paymentLine}>台新（812）28881013405739</p>
-  <p style={styles.paymentLine}>中信（822）193540210513</p>
-  <p style={styles.paymentLine}>國泰（013）699508481385</p>
-</div>
+              <p style={styles.paymentLine}>台新（812）28881013405739</p>
+              <p style={styles.paymentLine}>中信（822）193540210513</p>
+              <p style={styles.paymentLine}>國泰（013）699508481385</p>
+            </div>
 
             <p style={styles.paymentAmount}>
-  需付款金額：NT$ {deposit.toLocaleString()}
-</p>
+              需付款金額：NT$ {deposit.toLocaleString()}
+            </p>
           </div>
 
           <button
@@ -681,7 +691,8 @@ const styles = {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     margin: "0 auto -40px",
-  },homeFormCard: {
+  },
+  homeFormCard: {
     width: "100%",
     maxWidth: 360,
     margin: "0 auto",
@@ -875,7 +886,7 @@ const styles = {
     boxSizing: "border-box",
     boxShadow: "2px 2px 0 rgba(22,63,102,.14)",
   },
- 
+
   chipActive: {
     background: "#2f86d4",
     color: "#fff",
@@ -992,18 +1003,36 @@ const styles = {
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: 6,
+    gap: 4,
     background: "#fff1c9",
     color: "#9b6b00",
-    padding: "8px 12px",
+  
+    padding: "5px 10px",     
     fontWeight: 800,
-    fontSize: 13,
+    fontSize: 12,            
+  
     borderRadius: 999,
     border: "2px dashed #f2b94b",
     boxShadow: "0 4px 10px rgba(242,185,75,.18)",
+  
     marginTop: 0,
-    marginBottom: 0,
+    marginBottom: 10,        
+  
     whiteSpace: "nowrap",
+  },
+  noticeBoxWrap: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  
+  noticeSubText: {
+    fontSize: 10,
+    color: "#98a2ad",
+    lineHeight: 1.2,
+    fontWeight: 600,
+    marginTop: -10,
   },
   titleRow: {
     display: "flex",
@@ -1135,17 +1164,17 @@ const styles = {
     fontWeight: 700,
     whiteSpace: "pre",
   },
-  
+
   bankBox: {
     width: "fit-content",
     margin: "0 auto",
   },
-  
+
   bankName: {
     textAlign: "left",
     whiteSpace: "nowrap",
   },
-  
+
   bankAccount: {
     textAlign: "left",
     whiteSpace: "nowrap",
