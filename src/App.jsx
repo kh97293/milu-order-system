@@ -458,9 +458,13 @@ export default function App() {
                     ) : (
                       <>
                         <Info
-                          label="應付訂金 50%"
-                          value={`NT$ ${deposit.toLocaleString()}`}
-                        />
+  label={
+    selectedOrder.paymentStatus === "已匯款"
+      ? "已付訂金 50%"
+      : "應付訂金 50%"
+  }
+  value={`NT$ ${deposit.toLocaleString()}`}
+/>
                         <Info
                           label="應付尾款"
                           value={`NT$ ${finalPayment.toLocaleString()}`}
